@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>حاسبة الأجرة</title>
+  <link rel="stylesheet" href="css/fontawesome.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="emerald">
+  <!-- Top App Header -->
+  <header class="app-header">
+    <button id="menuBtn" class="header-icon-btn" aria-label="القائمة">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="header-title-box">
+      <i class="fa-solid fa-van-shuttle header-logo-icon"></i>
+      <h1 class="header-title">حاسبة أجرة المواصلات</h1>
+    </div>
+    <button id="quickHelpBtn" class="header-icon-btn" aria-label="تعليمات">
+      <i class="fa-solid fa-circle-question"></i>
+    </button>
+  </header>
+
+  <!-- Main Scrollable Content -->
+  <main class="main-content">
+    <!-- Fixed Fare Input Card -->
+    <section class="fare-hero-card">
+      <div class="fare-hero-inner">
+        <label for="fareInput" class="fare-label">
+          <i class="fa-solid fa-coins"></i>
+          <span>سعر الفرد الموحد (الأجرة)</span>
+        </label>
+        <div class="input-wrapper hero-input-wrapper">
+          <input type="number" id="fareInput" class="custom-input hero-input" inputmode="decimal" placeholder="0.00" step="any" min="0">
+          <button type="button" class="clear-input-btn" data-target="fareInput" title="مسح">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <span class="currency-badge">ج.م</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Groups Section -->
+    <section class="groups-section">
+      <div class="section-headline">
+        <div class="headline-title">
+          <i class="fa-solid fa-users"></i>
+          <span>مجموعات الركاب</span>
+        </div>
+        <span id="groupsCountBadge" class="count-badge">1 مجموعة</span>
+      </div>
+
+      <div id="groupsContainer" class="groups-container">
+        <!-- Dynamically rendered groups will appear here -->
+      </div>
+    </section>
+
+    <!-- Grand Total Bar (Visible when at least one group has remaining) -->
+    <section id="grandTotalCard" class="grand-total-card hidden">
+      <div class="grand-total-inner">
+        <div class="grand-total-info">
+          <div class="grand-total-title">
+            <i class="fa-solid fa-calculator"></i>
+            <span>إجمالي الباقي لجميع المجموعات</span>
+          </div>
+          <small class="grand-total-sub">المجموع الكلي للباقي الواجب إرجاعه</small>
+        </div>
+        <div class="grand-total-val-box">
+          <span id="grandTotalValue" class="grand-total-value">0.00</span>
+          <span class="currency-tag">ج.م</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add Group Floating Action / In-Page Button -->
+    <div class="add-group-action-box">
+      <button id="addPersonBtn" class="btn-add-person">
+        <i class="fa-solid fa-user-plus"></i>
+        <span>إضافة فرد / مجموعة جديدة</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- Bottom Toolbar -->
+  <nav class="bottom-toolbar">
+    <button id="barResetBtn" class="toolbar-btn text-danger" title="تصفير الكل">
+      <i class="fa-solid fa-arrow-rotate-right"></i>
+      <span>تصفير</span>
+    </button>
+    <button id="themeToggleBtn" class="toolbar-btn" title="تغيير الثيم">
+      <i class="fa-solid fa-palette"></i>
+      <span>المظهر</span>
+    </button>
+    <button id="barAddBtn" class="toolbar-btn toolbar-btn-center" title="إضافة">
+      <div class="center-btn-circle">
+        <i class="fa-solid fa-plus"></i>
+      </div>
+      <span>إضافة</span>
+    </button>
+    <button id="darkModeBtn" class="toolbar-btn" title="الوضع الليلي">
+      <i class="fa-solid fa-moon"></i>
+      <span>الداكن</span>
+    </button>
+    <button id="settingsBtn" class="toolbar-btn" title="الإعدادات">
+      <i class="fa-solid fa-gear"></i>
+      <span>خيارات</span>
+    </button>
+  </nav>
+
+  <!-- Side Navigation Drawer / Accordion Menu -->
+  <div id="drawerOverlay" class="drawer-overlay"></div>
+  <aside id="sideDrawer" class="side-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="drawer-title-box">
+        <i class="fa-solid fa-van-shuttle"></i>
+        <h3>حاسبة الأجرة الذكية</h3>
+      </div>
+      <button id="closeDrawerBtn" class="drawer-close-btn" aria-label="إغلاق القائمة">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="drawer-content">
+      <!-- Accordion 1: Daily Hadith -->
+      <div class="accordion-item active">
+        <button class="accordion-header">
+          <span><i class="fa-solid fa-book-quran"></i> حديث اليوم</span>
+          <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-body">
+          <div class="hadith-card">
+            <p class="hadith-text">«رَحِمَ اللَّهُ رَجُلًا سَمْحًا إِذَا بَاعَ، وَإِذَا اشْتَرَى، وَإِذَا اقْتَضَى»</p>
+            <span class="hadith-source">— صحيح البخاري</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 2: Instructions -->
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span><i class="fa-solid fa-circle-info"></i> تعليمات الاستخدام</span>
+          <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-body">
+          <ul class="guide-list">
+            <li><strong>1. سعر الفرد:</strong> اكتب سعر أجرة الفرد الموحد في الحقل العلوي.</li>
+            <li><strong>2. تفاصيل المجموعة:</strong> حدد عدد الأفراد والمبلغ الذي تم استلامه.</li>
+            <li><strong>3. الحساب التلقائي:</strong> سيظهر فوراً إجمالي المطلوب والباقي بلون واضح (أخضر إذا كان كافياً وأحمر للتحذير إن كان ناقصاً).</li>
+            <li><strong>4. زر المسح (X):</strong> يمسح محتوى الحقل المحدد فوراً بنقرة واحدة.</li>
+            <li><strong>5. زر الحذف:</strong> يحذف المجموعة أو يصفرها إذا كانت المجموعة الوحيدة.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Accordion 3: How it is calculated -->
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span><i class="fa-solid fa-calculator"></i> طريقة الحساب بالتفصيل</span>
+          <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-body">
+          <div class="calc-explanation-box">
+            <p><strong>حساب إجمالي السائق:</strong></p>
+            <code>إجمالي السائق = سعر الفرد × عدد الأشخاص</code>
+            <p class="mt-2"><strong>حساب الباقي المستحق:</strong></p>
+            <code>الباقي = المبلغ المستلم - إجمالي السائق</code>
+            <p class="mt-2 text-muted-custom">
+              - إذا كان الباقي موجباً (≥ 0) فهذا يعني وجود فكة للمستلم.<br>
+              - إذا كان سالباً (< 0) ينبهك البرنامج أن المبلغ المدفوع أقل من المطلوب.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 4: Settings / Preferences -->
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span><i class="fa-solid fa-sliders"></i> خيارات وتفضيلات</span>
+          <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-body">
+          <div class="setting-row">
+            <span>تأكيد عند تصفير البيانات</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="confirmResetToggle" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="setting-row mt-3">
+            <span>نسق الألوان المفضل</span>
+            <div class="theme-picker-pills">
+              <button class="theme-pill emerald active" data-pick-theme="emerald">زمردي</button>
+              <button class="theme-pill ocean" data-pick-theme="ocean">أزرق محيطي</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 5: Developer Info -->
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span><i class="fa-solid fa-laptop-code"></i> عن المطور والتطبيق</span>
+          <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-body text-center">
+          <div class="dev-avatar">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h4 class="dev-name">حاسبة الأجرة السريعة</h4>
+          <p class="dev-desc">تطبيق مخصص لتسهيل حساب أجرة سيارات الأجرة والميكروباص بدون إنترنت وبأعلى دقة وسرعة.</p>
+          <div class="badge-tag">الإصدار 1.0.0 (Offline Build)</div>
+        </div>
+      </div>
+
+      <!-- Accordion 6: Support Us -->
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span><i class="fa-solid fa-heart"></i> ادعمنا وشارك التطبيق</span>
+          <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-body">
+          <p class="support-text">إذا كان التطبيق يفيدك في يومك، لا تنسانا من صالح دعائك ومشاركته مع السائقين والركاب!</p>
+          <button id="shareAppBtn" class="btn-share-app">
+            <i class="fa-solid fa-share-nodes"></i>
+            <span>مشاركة التطبيق</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Explanation Popover Modal -->
+  <div id="calcPopover" class="popover-backdrop hidden">
+    <div class="popover-card">
+      <div class="popover-header">
+        <div class="popover-title">
+          <i class="fa-solid fa-calculator"></i>
+          <span>تفاصيل الحساب الرياضي</span>
+        </div>
+        <button id="closePopoverBtn" class="popover-close-btn" aria-label="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div id="popoverBody" class="popover-body">
+        <!-- Filled dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

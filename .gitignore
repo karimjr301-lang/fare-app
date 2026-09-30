@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Android Build Outputs & Cache
+android/.gradle/
+android/app/build/
+android/build/
+android/captures/
+android/local.properties
+android/.cxx/
+
+# OS / IDE Files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.iml
+
+# Old local analysis files (optional)
+*.rar
+*.txt
+*.jsonl
+app_classes.json
+pool_0.json
+base.apk
+apk_extracted/

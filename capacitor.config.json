@@ -1,0 +1,6 @@
+{
+  "appId": "com.farecalc.offline",
+  "appName": "حاسبة الأجرة",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

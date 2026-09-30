@@ -1,0 +1,24 @@
+{
+  "name": "fare-calculator-offline",
+  "version": "1.0.0",
+  "description": "حاسبة أجرة المواصلات الذكية أوفلاين",
+  "main": "index.js",
+  "scripts": {
+    "sync": "npx cap sync",
+    "open:android": "npx cap open android"
+  },
+  "keywords": [
+    "fare",
+    "calculator",
+    "arabic",
+    "offline",
+    "capacitor"
+  ],
+  "author": "Antigravity",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2"
+  }
+}
